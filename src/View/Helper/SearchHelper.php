@@ -58,18 +58,27 @@ class SearchHelper extends Helper
         // create
         $html .= $this->Form->create(null, $options + ['type' => 'GET']);
 
+		$html .= "<tr>";
         foreach ($filters as $field) {
             // if field is select-box because of the options-key
             if ($field['options']) {
                 $field['attributes']['options'] = $field['options'];
             }
+
+			$html .= "<td>";
             $html .= $this->Form->input($field['column'], $field['attributes']);
-            $html .= ' ';
+			$html .= "</td>";
+            #$html .= ' ';
         }
 
         // end
-        $html .= $this->Form->button(__('Filter'));
+		$html .= "<td>";
+        $html .= $this->Form->submit("/img/001_38.png", ['width'=>'24']);
+		$html .= "</td>";
+
+		$html .= "</tr>";
         $html .= $this->Form->end();
+
 
         return $html;
     }
