@@ -116,6 +116,36 @@ class SearchComponent extends Component
         $this->config('filters.' . $name, $options, true);
     }
 
+	public function setSearchFilter($field, $type = 'text')
+    {
+        $operator = null;
+        switch($type) {
+            case 'number':
+                $operator = '=';
+                break;
+            case 'text':
+                $operator = 'LIKE';
+                break;
+            default:
+                return false;
+        }
+
+		$array = preg_split('/\./', $field);
+		$column = $array[count($array)-1];
+
+        return $this->addFilter($column, [
+            'column' => $column,
+            'field' => $field,
+            'operator' => $operator,
+            'attributes' => [
+                'class' => 'Search',
+                'type' => $type,
+                'placeholder' => '',
+                'label' => false,
+            ],
+        ]);
+    }
+
     /**
      * removeFilter
      *
